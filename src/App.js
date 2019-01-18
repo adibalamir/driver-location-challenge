@@ -7,7 +7,8 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      stops: []
+      stops: [],
+      legs: []
     };
   }
 
@@ -43,7 +44,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.stops)
     return (
       <div className="App">
         <Canvas stops={this.state.stops} legs={this.state.legs} />
