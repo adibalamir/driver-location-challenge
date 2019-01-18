@@ -1,40 +1,31 @@
 import React, { Component } from 'react';
 import './App.css';
+import Canvas from './Canvas'
 
 
 class App extends Component {
-
-  state = {
-    driver: '',
-    stops: '',
-    legs: '',
-    post: '',
-    responseToPost: '',
-  };
-
-  componentDidMount() {
-    console.log('hi')
-    this.callAPI()
-      .then(res => this.setState({response: res[0].name}))
-      .catch(err => console.log(err))
+  constructor(props){
+    super(props)
+    this.state = {
+      stops: []
+    };
   }
 
-  // callAPI = async () => {
-  //   const response = await fetch('/stops')
-  //   const body = await response.json()
-
-  //   if (response.status !==200) throw Error(body.message)
-
-  //   return body
-  // }
+  componentDidMount() {
+    this.getStops()
+    this.getLegs()
+  }
 
   getStops = async () => {
     const response = await fetch('/stops')
     const body = await response.json()
+    this.setState({stops: body})
+  }
 
-    if (response.status !==200) throw Error(body.message)
-
-    return body
+  getLegs = async () => {
+    const response = await fetch('/legs')
+    const body = await response.json()
+    this.setState({legs: body})
   }
 
   handleSubmit = async e => {
@@ -52,10 +43,11 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.stops)
     return (
       <div className="App">
-        <canvas width='960' height='500' id='canvas'></canvas>
-        <p>{this.state.response}</p>
+        <Canvas stops={this.state.stops} legs={this.state.legs} />
+        {this.state.stops.map(stop=> <p key={stop.name}>{stop.name}</p>)}
         <form onSubmit={this.handleSubmit}>
           <p>
             <strong>Post to Server:</strong>
