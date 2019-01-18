@@ -17,6 +17,14 @@ class App extends Component {
     this.getLegs()
   }
 
+  getDriver = async () => {
+    const response = await fetch('/driver')
+    const body = await response.json()
+    this.setState({ driver: body })
+    console.log('DRIVER')
+    console.log(this.state.driver)
+  }
+
   getStops = async () => {
     const response = await fetch('/stops')
     const body = await response.json()
