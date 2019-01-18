@@ -26,7 +26,14 @@ class App extends Component {
   getLegs = async () => {
     const response = await fetch('/legs')
     const body = await response.json()
-    this.setState({legs: body})
+  getStopCoordinates = (stopName, stopsArray) => {
+    for (let i = 0; i < stopsArray.length; i++) {
+      if (stopsArray[i].name === stopName) {
+        return { x: stopsArray[i].x, y: stopsArray[i].y }
+        // console.log(stopsArray[i].x)
+      }
+    }
+  }
   }
 
   handleSubmit = async e => {
