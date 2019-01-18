@@ -96,8 +96,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Canvas stops={this.state.stops} legs={this.state.legs} />
-        {this.state.stops.map(stop=> <p key={stop.name}>{stop.name}</p>)}
+        <Canvas
+          driver={this.state.driver}
+          id="canvas"
+          getDriver={this.getDriverCoordinates}
+          stops={this.state.stops}
+          legs={this.state.legs}
+        />
         <form onSubmit={this.handleSubmit}>
           <p>
             <strong>Post to Server:</strong>
