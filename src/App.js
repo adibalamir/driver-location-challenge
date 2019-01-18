@@ -34,6 +34,14 @@ class App extends Component {
   getLegs = async () => {
     const response = await fetch('/legs')
     const body = await response.json()
+    await this.setState({ legs: body })
+    console.log('LEGS')
+    console.log(this.state.legs)
+  }
+
+  // var x = 'some string';
+  // alert(x.charAt(0));
+
   getStopCoordinates = (stopName, stopsArray) => {
     for (let i = 0; i < stopsArray.length; i++) {
       if (stopsArray[i].name === stopName) {
