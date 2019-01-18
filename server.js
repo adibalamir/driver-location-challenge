@@ -5,6 +5,13 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/driver', (req, res) => {
+  res.send({
+      "activeLegID": "FG",
+      "legProgress": "33"
+  })
+})
+
 app.get('/stops', (req, res) => {
   res.send([
     {"name": "A", "x": 20, "y": 10},
@@ -90,13 +97,6 @@ app.get('/legs', (req, res) => {
     "legID":"KL"
   }]);
 });
-
-app.get('/driver', (req, res) => {
-    res.send({
-        "activeLegID": "FG",
-        "legProgress": "33"
-    })
-})
 
 app.post('/api/world', (req, res) => {
   console.log(req.body);
