@@ -4,12 +4,19 @@ import Canvas from './Canvas'
 
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
+      driver: {
+        activeLegID: 'AB',
+        legProgress: '50',
+        x: 20,
+        y: 20,
+        found: false,
+      },
       stops: [],
-      legs: []
-    };
+      legs: [],
+    }
   }
 
   componentDidMount() {
