@@ -1,7 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import Canvas from './Canvas'
 
+function resolveAfter(t) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved')
+    }, t)
+  })
+}
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +29,8 @@ class App extends Component {
   componentDidMount() {
     this.getStops()
     this.getLegs()
+    this.getDriver()
+    this.getDriverCoordinates()
   }
 
   getDriver = async () => {
@@ -35,7 +44,9 @@ class App extends Component {
   getStops = async () => {
     const response = await fetch('/stops')
     const body = await response.json()
-    this.setState({stops: body})
+    await this.setState({ stops: body })
+    console.log('STOPS')
+    console.log(this.state.stops)
   }
 
   getLegs = async () => {
@@ -57,6 +68,7 @@ class App extends Component {
       }
     }
   }
+
   getDriverCoordinates = async () => {
     await resolveAfter(1000)
     if (this.state.stops.length > 0) {
@@ -101,6 +113,8 @@ class App extends Component {
   }
 
   render() {
+    // this.getStopCoordinates("A", this.state.stops)
+    console.log('Rendering app...')
     return (
       <div className="App">
         <Canvas
@@ -123,8 +137,8 @@ class App extends Component {
         </form>
         <p>{this.state.responseToPost}</p>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
