@@ -50,6 +50,33 @@ class App extends Component {
       }
     }
   }
+  getDriverCoordinates = async () => {
+    await resolveAfter(1000)
+    if (this.state.stops.length > 0) {
+      let xy1 = await this.getStopCoordinates(
+        this.state.driver.activeLegID.charAt(0),
+        this.state.stops
+      )
+      console.log(xy1)
+      let xy2 = await this.getStopCoordinates(
+        this.state.driver.activeLegID.charAt(1),
+        this.state.stops
+      )
+      let progress = Number('0.' + this.state.driver.legProgress)
+      let x = xy1.x + progress * Math.abs(xy2.x - xy1.x)
+      let y = xy2.y + progress * Math.abs(xy2.y - xy1.y)
+      // return {x, y}
+      console.log(x, y)
+      this.setState({
+        driver: {
+          x,
+          y,
+          activeLegID: this.state.driver.activeLegID,
+          legProgress: progress,
+        },
+      })
+      console.log(this.state.driver)
+    }
   }
 
   handleSubmit = async e => {
