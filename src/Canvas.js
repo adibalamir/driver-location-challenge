@@ -4,14 +4,13 @@ import { Stage, Layer, Circle, Line /*Text*/ } from 'react-konva'
 class Canvas extends Component {
   render() {
     let visitedByDriver = true
-    console.log("rendering...")
     return (
       <Stage
-        margin={'auto'}
-        width={window.innerWidth}
+        width={400}
         height={400}
         scaleY={-1}
         offsetY={400}
+        draggable={true}
       >
         <Layer offsetX={-50} scaleX={3} scaleY={3}>
           {this.props.stops.map(stop => (

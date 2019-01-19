@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.css'
+import './App.scss'
 import Canvas from './Canvas'
 
 function resolveAfter(t) {
@@ -17,13 +17,12 @@ class App extends Component {
       driver: {
         activeLegID: 'AB',
         legProgress: '50',
-        x: 20,
-        y: 20,
+        x: -200,
+        y: -200,
       },
       stops: [],
       legs: [],
       legInput: 'AB',
-      loading: false
     }
   }
 
@@ -61,7 +60,7 @@ class App extends Component {
   }
 
   getDriverCoordinates = async () => {
-    await resolveAfter(0)
+    await resolveAfter(30)
     if (this.state.stops.length > 0) {
       let xy1 = await this.getStopCoordinates(
         this.state.driver.activeLegID.charAt(0),
@@ -118,13 +117,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <h1 className="App-header">Rose Rocket Challenge</h1>
+      <div id='canvas'>
       {<Canvas
         driver={this.state.driver}
-        id="canvas"
         getDriver={this.getDriverCoordinates}
         stops={this.state.stops}
         legs={this.state.legs}
       />}
+      </div>
         <form onSubmit={this.handleSubmit}>
           <p>
             <strong>Edit Driver:</strong>
@@ -132,6 +133,7 @@ class App extends Component {
           <select onClick={this.handleClick} name="legs" multiple>
             {this.state.legs.map(leg => <option value={leg.legID}>{leg.legID}</option>)}
           </select>
+          <br />
           <input
             type="number"
             min="0"
