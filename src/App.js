@@ -2,53 +2,48 @@ import React, { Component } from 'react'
 import './App.scss'
 import Canvas from './Canvas'
 
-function resolveAfter(t) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve('resolved')
-    }, t)
-  })
-}
-
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       driver: {
-        activeLegID: 'AB',
-        legProgress: '50',
-        x: -200,
-        y: -200,
+        activeLegID: '',
+        legProgress: '',
+        x: undefined,
+        y: undefined,
       },
       stops: [],
       legs: [],
-      legInput: 'AB',
+      legInput: '',
+      isLoading: false,
     }
   }
 
   componentDidMount() {
-    this.getStops()
-    this.getLegs()
-    this.getDriver()
-    this.getDriverCoordinates()
+    this.setState({isLoading: true})
+    this.fetchData()
   }
 
-  getDriver = async () => {
-    const response = await fetch('/driver')
-    const body = await response.json()
-    this.setState({ driver: body })
-  }
+  fetchData = async () => {
+    try {
+      let [driverRes, stopsRes, legsRes] = await Promise.all([
+        fetch("/driver"),
+        fetch("/stops"),
+        fetch("/legs")
+      ]);
+      
+      const driver = await driverRes.json()
+      const stops = await stopsRes.json()
+      const legs = await legsRes.json()
 
-  getStops = async () => {
-    const response = await fetch('/stops')
-    const body = await response.json()
-    await this.setState({ stops: body })
-  }
+      this.setState({
+        driver, stops, legs
+      }, this.getDriverCoordinates)
 
-  getLegs = async () => {
-    const response = await fetch('/legs')
-    const body = await response.json()
-    await this.setState({ legs: body })
+    }
+    catch(err) {
+      console.log(err);
+    };
   }
 
   getStopCoordinates = (stopName, stopsArray) => {
@@ -60,7 +55,6 @@ class App extends Component {
   }
 
   getDriverCoordinates = async () => {
-    await resolveAfter(30)
     if (this.state.stops.length > 0) {
       let xy1 = await this.getStopCoordinates(
         this.state.driver.activeLegID.charAt(0),
@@ -80,6 +74,7 @@ class App extends Component {
           activeLegID: this.state.driver.activeLegID,
           legProgress: progress,
         },
+        isLoading: false,
       })
     }
   }
@@ -115,6 +110,7 @@ class App extends Component {
   }
 
   render() {
+    if (!this.state.isLoading) {
     return (
       <div className="App">
       <h1 className="App-header">Rose Rocket Challenge</h1>
@@ -144,7 +140,9 @@ class App extends Component {
           <button type="submit">Submit</button>
         </form>
       </div>
-    )
+    )} else {
+      return <div>Loading...</div>
+    }
   }
 }
 
