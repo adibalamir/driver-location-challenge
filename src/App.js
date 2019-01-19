@@ -60,7 +60,7 @@ class App extends Component {
   }
 
   getDriverCoordinates = async () => {
-    await resolveAfter(1000)
+    await resolveAfter(100)
     if (this.state.stops.length > 0) {
       let xy1 = await this.getStopCoordinates(
         this.state.driver.activeLegID.charAt(0),
@@ -70,9 +70,9 @@ class App extends Component {
         this.state.driver.activeLegID.charAt(1),
         this.state.stops
       )
-      let progress = Number('0.' + this.state.driver.legProgress)
-      let x = xy1.x + progress * (xy2.x - xy1.x)
-      let y = xy1.y + progress * (xy2.y - xy1.y)
+      let progress = Number(this.state.driver.legProgress)
+      let x = xy1.x + (progress/100) * (xy2.x - xy1.x)
+      let y = xy1.y + (progress/100) * (xy2.y - xy1.y)
       this.setState({
         driver: {
           x,
@@ -86,21 +86,33 @@ class App extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    const response = await fetch('/api/world', {
+    const response = await fetch('/driver', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ post: this.state.post }),
+      body: JSON.stringify({ 
+        progressInput: this.state.driver.legProgress,
+        leg: this.state.driver.legID
+      }),
     })
-    const body = await response.text()
+    const json = await response.text()
+    const  body = JSON.parse(json)
 
-    this.setState({ responseToPost: body })
+    this.setState({ 
+      driver: {
+        ...this.state.driver,
+        legProgress: body.progressInput
+    } 
+    }, this.getDriverCoordinates)
+  }
+
+  handleClick = (e) => {
+    this.getDriverCoordinates()
+    this.setState({driver: {...this.state.driver, activeLegID: e.target.value}})
   }
 
   render() {
-    // this.getStopCoordinates("A", this.state.stops)
-    console.log('Rendering app...')
     return (
       <div className="App">
         <Canvas
@@ -114,10 +126,13 @@ class App extends Component {
           <p>
             <strong>Post to Server:</strong>
           </p>
+          <select onClick={this.handleClick} name="legs" multiple>
+            {this.state.legs.map(leg => <option value={leg.legID}>{leg.legID}</option>)}
+          </select>
           <input
             type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
+            value={this.state.driver.legProgress}
+            onChange={e => this.setState({ driver: {...this.state.driver, legProgress: e.target.value} })}
           />
           <button type="submit">Submit</button>
         </form>

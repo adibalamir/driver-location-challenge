@@ -5,11 +5,17 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+let driver = {
+  "activeLegID": "FG",
+  "legProgress": "33"
+}
+
 app.get('/driver', (req, res) => {
-  res.send({
-      "activeLegID": "FG",
-      "legProgress": "33"
-  })
+  res.send(driver)
+})
+
+app.post('/driver ', (req, res) => {
+  console.log(req, res)  
 })
 
 app.get('/stops', (req, res) => {
@@ -98,11 +104,11 @@ app.get('/legs', (req, res) => {
   }]);
 });
 
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
+app.post('/driver', (req, res) => {
+  res.send({
+    progressInput: req.body.progressInput,
+    leg: req.body.leg
+  });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

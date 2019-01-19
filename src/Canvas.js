@@ -19,9 +19,6 @@ import { Stage, Layer, Circle, Line /*Text*/ } from 'react-konva'
 
 class Canvas extends Component {
   render() {
-    console.log('Rendering canvas...')
-    console.log(this.props.driver)
-
     let visitedByDriver = true
 
     return (
@@ -48,7 +45,6 @@ class Canvas extends Component {
               this.props.driver.activeLegID !== leg.legID &&
               visitedByDriver
             ) {
-              console.log('already traveled')
               return (
                 <Line
                   key={leg.legID}
@@ -66,7 +62,6 @@ class Canvas extends Component {
                 />
               )
             } else if (this.props.driver.activeLegID === leg.legID) {
-              console.log('driver on leg')
               visitedByDriver = false
               return (
                 <React.Fragment key={leg.legID}>
@@ -102,7 +97,6 @@ class Canvas extends Component {
               this.props.driver.activeLegID !== leg.legID &&
               !visitedByDriver
             ) {
-              console.log('progress left')
               return (
                 <Line
                   key={leg.legID}
