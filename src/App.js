@@ -82,8 +82,8 @@ class App extends Component {
         this.state.stops
       )
       let progress = Number('0.' + this.state.driver.legProgress)
-      let x = xy1.x + progress * Math.abs(xy2.x - xy1.x)
-      let y = xy2.y + progress * Math.abs(xy2.y - xy1.y)
+      let x = xy1.x + progress * (xy2.x - xy1.x)
+      let y = xy1.y + progress * (xy2.y - xy1.y)
       // return {x, y}
       console.log(x, y)
       this.setState({

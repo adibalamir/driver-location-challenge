@@ -21,6 +21,9 @@ class Canvas extends Component {
   render() {
     console.log('Rendering canvas...')
     console.log(this.props.driver)
+
+    let visitedByDriver = true
+
     return (
       <Stage
         margin={'auto'}
@@ -41,8 +44,15 @@ class Canvas extends Component {
             />
           ))}
           {this.props.legs.map((leg, i) => {
-            switch (true) {
-              case this.props.driver.activeLegID === leg.legID:
+            
+            let isDriverLocation = this.props.driver.activeLegID === leg.legID
+            // console.log(this.props.driver.activeLegID === leg.legID)
+            // console.log(visitedByDriver)
+            // console.log(this.props.driver.activeLegID !== leg.legID && visitedByDriver)
+            console.log(this.props.stops[i])
+            
+              if (this.props.driver.activeLegID !== leg.legID && visitedByDriver){
+                console.log('already traveled')
                 return (
                   <Line
                     key={leg.legID}
@@ -56,26 +66,58 @@ class Canvas extends Component {
                     close
                     stroke={'#f716ca'}
                     strokeWidth={1}
-                    dash={[3, 3]}
+                    dash={[0,0]}
                   />
                 )
-              default:
+              } else if (this.props.driver.activeLegID === leg.legID){
+                console.log('driver on leg')
+                visitedByDriver = false
                 return (
+                  <React.Fragment key={leg.legID}>
                   <Line
-                    key={leg.legID}
                     points={[
                       this.props.stops[i].x,
                       this.props.stops[i].y,
-                      this.props.stops[i + 1].x,
-                      this.props.stops[i + 1].y,
+                      this.props.driver.x,
+                      this.props.driver.y,
                     ]}
                     tension={2}
                     close
                     stroke={'#f716ca'}
                     strokeWidth={1}
-                    dash={[0, 0]}
+                    dash={[0,0]}
                   />
+                  <Line
+                    points={[
+                      this.props.driver.x,
+                      this.props.driver.y,
+                      this.props.stops[i+1].x,
+                      this.props.stops[i+1].y,
+                    ]}
+                    tension={2}
+                    close
+                    stroke={'#f716ca'}
+                    strokeWidth={1}
+                    dash={[3,3]}
+                  />
+                  </React.Fragment>
                 )
+              } else if (this.props.driver.activeLegID !== leg.legID && !visitedByDriver) {
+                console.log('progress left')
+                return <Line
+                key={leg.legID}
+                points={[
+                  this.props.stops[i].x,
+                  this.props.stops[i].y,
+                  this.props.stops[i + 1].x,
+                  this.props.stops[i + 1].y,
+                ]}
+                tension={2}
+                close
+                stroke={'#f716ca'}
+                strokeWidth={1}
+                dash={[3,3]}
+                />
             }
           })}
           <Circle
