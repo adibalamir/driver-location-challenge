@@ -19,10 +19,11 @@ class App extends Component {
         legProgress: '50',
         x: 20,
         y: 20,
-        found: false,
       },
       stops: [],
       legs: [],
+      legInput: 'AB',
+      loading: false
     }
   }
 
@@ -60,7 +61,7 @@ class App extends Component {
   }
 
   getDriverCoordinates = async () => {
-    await resolveAfter(100)
+    await resolveAfter(0)
     if (this.state.stops.length > 0) {
       let xy1 = await this.getStopCoordinates(
         this.state.driver.activeLegID.charAt(0),
@@ -86,6 +87,7 @@ class App extends Component {
 
   handleSubmit = async e => {
     e.preventDefault()
+    this.setState({loading: true})
     const response = await fetch('/driver', {
       method: 'POST',
       headers: {
@@ -93,50 +95,52 @@ class App extends Component {
       },
       body: JSON.stringify({ 
         progressInput: this.state.driver.legProgress,
-        leg: this.state.driver.legID
+        leg: this.state.legInput
       }),
     })
     const json = await response.text()
     const  body = JSON.parse(json)
+    console.log(body.leg)
 
     this.setState({ 
       driver: {
         ...this.state.driver,
-        legProgress: body.progressInput
+        legProgress: body.progressInput,
+        activeLegID: body.leg
     } 
     }, this.getDriverCoordinates)
   }
 
-  handleClick = (e) => {
-    this.getDriverCoordinates()
-    this.setState({driver: {...this.state.driver, activeLegID: e.target.value}})
+  handleClick = e => {
+    this.setState({legInput: e.target.value})
   }
 
   render() {
     return (
       <div className="App">
-        <Canvas
-          driver={this.state.driver}
-          id="canvas"
-          getDriver={this.getDriverCoordinates}
-          stops={this.state.stops}
-          legs={this.state.legs}
-        />
+      {<Canvas
+        driver={this.state.driver}
+        id="canvas"
+        getDriver={this.getDriverCoordinates}
+        stops={this.state.stops}
+        legs={this.state.legs}
+      />}
         <form onSubmit={this.handleSubmit}>
           <p>
-            <strong>Post to Server:</strong>
+            <strong>Edit Driver:</strong>
           </p>
           <select onClick={this.handleClick} name="legs" multiple>
             {this.state.legs.map(leg => <option value={leg.legID}>{leg.legID}</option>)}
           </select>
           <input
-            type="text"
+            type="number"
+            min="0"
+            max="100"
             value={this.state.driver.legProgress}
             onChange={e => this.setState({ driver: {...this.state.driver, legProgress: e.target.value} })}
           />
           <button type="submit">Submit</button>
         </form>
-        <p>{this.state.responseToPost}</p>
       </div>
     )
   }

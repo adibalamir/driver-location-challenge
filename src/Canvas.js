@@ -1,26 +1,10 @@
 import React, { Component } from 'react'
 import { Stage, Layer, Circle, Line /*Text*/ } from 'react-konva'
 
-/* <Line
-  points={[stops[0].x, stops[0].y, stops[1].x, stops[1].y]}
-  tension={0.5}
-  closed
-  stroke="black"
-/> */
-/* <Circle
-  x={20}
-  y={10}
-  width={5}
-  height={5}
-  fill="red"
-  shadowBlur={5}
-  onClick={this.handleClick}
-/> */
-
 class Canvas extends Component {
   render() {
     let visitedByDriver = true
-
+    console.log("rendering...")
     return (
       <Stage
         margin={'auto'}
