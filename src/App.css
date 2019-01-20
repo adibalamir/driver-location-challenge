@@ -9,39 +9,48 @@ body {
 #position-form {
   text-align: center;
   width: 30%;
-  margin: 10% 5% 5% 50%;
+  margin: 5% 5% 5% 50%;
   position: absolute;
   left: 4rem;
   box-shadow: inset 0 0 10px #0f0;
   background-color: #ff9a9a4d;
   padding: 1rem; }
-  #position-form .header {
-    text-align: center;
-    margin: 0rem 0rem 1rem 0rem;
-    font-size: 1.3rem;
-    background-color: #ffbebe; }
-  #position-form .choose-leg {
-    margin: 0rem 0rem 1rem 0rem; }
-    #position-form .choose-leg p {
-      margin-bottom: 0.5rem;
-      font-size: 1rem; }
-    #position-form .choose-leg select {
-      width: 5rem;
-      font-size: 1rem; }
-  #position-form .choose-progress {
-    margin: 0rem 0rem 0rem 0rem; }
-    #position-form .choose-progress p {
-      margin-bottom: 0.5rem;
-      font-size: 1rem; }
-    #position-form .choose-progress input {
-      font-size: 1rem;
-      margin-left: 1rem; }
-  #position-form button {
-    position: relative;
-    margin: 1rem 3rem 0rem 3rem;
-    padding: 0.5rem; }
-  #position-form p {
-    margin: 0rem; }
+
+#position-form .header {
+  text-align: center;
+  margin: 0rem 0rem 1rem 0rem;
+  font-size: 1.3rem;
+  background-color: #ffbebe; }
+
+#position-form .choose-leg {
+  margin: 0rem 0rem 1rem 0rem; }
+
+#position-form .choose-leg p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem; }
+
+#position-form .choose-leg select {
+  width: 5rem;
+  font-size: 1rem; }
+
+#position-form .choose-progress {
+  margin: 0rem 0rem 0rem 0rem; }
+
+#position-form .choose-progress p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem; }
+
+#position-form .choose-progress input {
+  font-size: 1rem;
+  margin-left: 1rem; }
+
+#position-form button {
+  position: relative;
+  margin: 1rem 3rem 0rem 3rem;
+  padding: 0.5rem; }
+
+#position-form p {
+  margin: 0rem; }
 
 #canvas {
   background-color: white;
@@ -56,7 +65,7 @@ body {
 h1 {
   font-size: 2rem;
   color: #ff7b7b;
-  margin: auto;
+  margin: 1.3rem auto;
   display: inline-block; }
 
 @media only screen and (max-width: 600px) {

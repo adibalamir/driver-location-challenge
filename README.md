@@ -1,4 +1,4 @@
-### Rose Rocket Driver Challenge
+# Rose Rocket Driver Challenge
 
 ## How to Run the App
 
@@ -7,7 +7,7 @@
 3. Run 'node server.js'
 4. In another terminal window, run 'npm start'
 
-##Dependancies
+### Dependancies
 
 - express
 - body-parser
@@ -19,5 +19,6 @@
 - node-sass
 - npm run-all
 
-##Preview
+### Preview
 
+![Preview GIF](/assets/preview.gif")

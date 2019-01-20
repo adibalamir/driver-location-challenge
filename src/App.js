@@ -110,22 +110,17 @@ class App extends Component {
   }
 
   render() {
-    let canvas
     if (!this.state.isLoading) {
-      canvas = <Canvas
-      driver={this.state.driver}
-      getDriver={this.getDriverCoordinates}
-      stops={this.state.stops}
-      legs={this.state.legs}
-    />
-    } else {
-      canvas = <p>Loading...</p>
-    }
     return (
       <div className="App">
       <h1 className="App-header">Rose Rocket Challenge</h1>
       <div id='canvas'>
-      {canvas}
+      {<Canvas
+      driver={this.state.driver}
+      getDriver={this.getDriverCoordinates}
+      stops={this.state.stops}
+      legs={this.state.legs}
+    />}
       </div>
         <div id="position-form">
         <form onSubmit={this.handleSubmit}>
@@ -157,7 +152,9 @@ class App extends Component {
         </form>
         </div>
       </div>
-    )
+    )} else {
+      return <p>Loading...</p>
+    }
   }
 }
 
