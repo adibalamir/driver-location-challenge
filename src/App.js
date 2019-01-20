@@ -37,7 +37,7 @@ class App extends Component {
       const legs = await legsRes.json()
 
       this.setState({
-        driver, stops, legs
+        driver, stops, legs,
       }, this.getDriverCoordinates)
 
     }
@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   getDriverCoordinates = async () => {
-    if (this.state.stops.length > 0) {
+      this.setState({legInput: this.state.driver.activeLegID})
       let xy1 = await this.getStopCoordinates(
         this.state.driver.activeLegID.charAt(0),
         this.state.stops
@@ -76,7 +76,7 @@ class App extends Component {
         },
         isLoading: false,
       })
-    }
+    
   }
 
   handleSubmit = async e => {
@@ -122,23 +122,35 @@ class App extends Component {
         legs={this.state.legs}
       />}
       </div>
+        <div id="position-form">
         <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Edit Driver:</strong>
-          </p>
+          <p className="header">Edit Driver Location</p>
+          <div className="choose-leg">
+          <p>Choose a leg: </p>
           <select onClick={this.handleClick} name="legs" multiple>
-            {this.state.legs.map(leg => <option value={leg.legID}>{leg.legID}</option>)}
+            {this.state.legs.map((leg) => {
+              if (leg.legID === this.state.driver.activeLegID) {
+                return <option selected={true} value={leg.legID}>{leg.legID}</option>
+              } else {
+                return <option value={leg.legID}>{leg.legID}</option>
+              }
+            }
+            )}
           </select>
-          <br />
-          <input
-            type="number"
-            min="0"
-            max="100"
-            value={this.state.driver.legProgress}
-            onChange={e => this.setState({ driver: {...this.state.driver, legProgress: e.target.value} })}
-          />
+          </div><hr />
+          <div className="choose-progress">
+            <p>Progress (0-100%): </p>
+            <input
+              type="number"
+              min="0"
+              max="100"
+              value={this.state.driver.legProgress}
+              onChange={e => this.setState({ driver: {...this.state.driver, legProgress: e.target.value} })}
+            />%
+          </div>
           <button type="submit">Submit</button>
         </form>
+        </div>
       </div>
     )} else {
       return <div>Loading...</div>

@@ -9,17 +9,17 @@ class Canvas extends Component {
         width={400}
         height={400}
         scaleY={-1}
-        offsetY={400}
+        offsetY={380}
         draggable={true}
       >
-        <Layer offsetX={-50} scaleX={3} scaleY={3}>
+        <Layer offsetX={0} scaleX={3} scaleY={2.5}>
           {this.props.stops.map(stop => (
             <Circle
               key={stop.name}
               x={stop.x}
               y={stop.y}
-              width={4}
-              height={4}
+              width={2.5}
+              height={2.5}
               fill="black"
             />
           ))}
@@ -40,7 +40,7 @@ class Canvas extends Component {
                   tension={2}
                   close
                   stroke={'#f716ca'}
-                  strokeWidth={1}
+                  strokeWidth={0.8}
                   dash={[0, 0]}
                 />
               )
@@ -58,7 +58,7 @@ class Canvas extends Component {
                     tension={2}
                     close
                     stroke={'#f716ca'}
-                    strokeWidth={1}
+                    strokeWidth={0.8}
                     dash={[0, 0]}
                   />
                   <Line
@@ -71,7 +71,7 @@ class Canvas extends Component {
                     tension={2}
                     close
                     stroke={'#f716ca'}
-                    strokeWidth={1}
+                    strokeWidth={0.8}
                     dash={[3, 3]}
                   />
                 </React.Fragment>
@@ -92,7 +92,7 @@ class Canvas extends Component {
                   tension={2}
                   close
                   stroke={'#f716ca'}
-                  strokeWidth={1}
+                  strokeWidth={0.8}
                   dash={[3, 3]}
                 />
               )
@@ -101,8 +101,8 @@ class Canvas extends Component {
           <Circle
             x={this.props.driver.x}
             y={this.props.driver.y}
-            width={5}
-            height={5}
+            width={4}
+            height={4}
             fill="blue"
           />
         </Layer>
