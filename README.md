@@ -21,4 +21,4 @@
 
 ### Preview
 
-![Preview GIF](/assets/preview.gif")
+![Preview GIF](/assets/preview.gif)
