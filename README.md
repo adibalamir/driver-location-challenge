@@ -34,6 +34,6 @@ This is the core app, the "Edit Driver Location Form" can be used to change the 
 
 ### Bonus-1
 
-You can place a bonus driver on the map using x and y coordinates. A leg will be drawn between the bonus driver and the closest stop available.
+You can place a bonus driver (a red dot) on the map using x and y coordinates. A leg will be drawn between the bonus driver and the closest stop available. If the driver is out of bounds, you can drag the map around to see the bonus driver. You must choose numbers between 0 and 200.
 
 ![Bonus-1 GIF](/assets/bonus1.gif)
