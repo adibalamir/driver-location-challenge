@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Stage, Layer, Circle, Line /*Text*/ } from 'react-konva'
+import { Stage, Layer, Circle, Line } from 'react-konva'
 
 class Canvas extends Component {
   render() {
@@ -66,7 +66,6 @@ class Canvas extends Component {
                     this.props.stops[i + 1].y,
                   ]}
                   tension={2}
-                  close
                   stroke={'#f716ca'}
                   strokeWidth={0.8}
                   dash={[0, 0]}
@@ -83,8 +82,6 @@ class Canvas extends Component {
                       this.props.driver.x,
                       this.props.driver.y,
                     ]}
-                    tension={2}
-                    close
                     stroke={'#f716ca'}
                     strokeWidth={0.8}
                     dash={[0, 0]}
@@ -96,8 +93,6 @@ class Canvas extends Component {
                       this.props.stops[i + 1].x,
                       this.props.stops[i + 1].y,
                     ]}
-                    tension={2}
-                    close
                     stroke={'#f716ca'}
                     strokeWidth={0.8}
                     dash={[3, 3]}
@@ -117,8 +112,6 @@ class Canvas extends Component {
                     this.props.stops[i + 1].x,
                     this.props.stops[i + 1].y,
                   ]}
-                  tension={2}
-                  close
                   stroke={'#f716ca'}
                   strokeWidth={0.8}
                   dash={[3, 3]}
