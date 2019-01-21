@@ -48,11 +48,13 @@ body {
 
   button {
     position: relative;
-    // bottom: 2.3rem;
-    // width: 4.3rem;
     margin: 1rem 3rem 0rem 3rem;
     padding: 0.5rem;
-    // position: absolute;
+    background-color: white;
+    border: 1px solid cyan;
+  }
+  button:hover {
+    background-color: #ffb4b4
   }
   p {
     margin: 0rem;
@@ -79,6 +81,21 @@ h1 {
 
 .bonus-driver-form {
   margin-top: 25rem;
+  p {
+    margin: 0rem 0rem 0.5rem 0.5rem;
+  }
+  input {
+    margin-left: 0.5rem;
+  }
+  button {
+    margin: 0.5rem 0.5rem 0.5rem 1.6rem;
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px solid cyan;
+  }
+  button:hover {
+    background-color: #ffb4b4
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -92,6 +109,10 @@ h1 {
     position: static;
     display: block;
     width: 90%;
+    margin: 1rem auto;
+  }
+  .bonus-driver-form {
+    display: block;
     margin: 1rem auto;
   }
 }
