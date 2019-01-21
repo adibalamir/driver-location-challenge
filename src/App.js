@@ -15,12 +15,12 @@ class App extends Component {
       bonusDriver: {
         x: '',
         y: '',
-        bonusLeg: ''
+        bonusLeg: {}
       },
       stops: [],
       legs: [],
       legInput: '',
-      bonusDriverInput: {},
+      bonusDriverInput: {x: '', y: ''},
       isLoading: false,
     }
   }
@@ -225,20 +225,21 @@ class App extends Component {
             </form>
           </div>
           <form className="bonus-driver-form" onSubmit={this.handleBonusSubmit}>
+            <p>Bonus Driver</p>
             x:<input 
               type="number"
               min="0"
               max="200"
               value={this.state.bonusDriverInput.x}
               onChange={e => this.setState({bonusDriverInput: {...this.state.bonusDriverInput, x: e.target.value}})}
-            />
+            /><br />
             y:<input
               type="number"
               min="0"
               max="200"
               value={this.state.bonusDriverInput.y}
               onChange={e => this.setState({bonusDriverInput: {...this.state.bonusDriverInput ,y: e.target.value}})}
-            />
+            /><br />
             <button>Submit</button>
           </form>
         </div>

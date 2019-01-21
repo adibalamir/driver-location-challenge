@@ -4,7 +4,6 @@ import { Stage, Layer, Circle, Line /*Text*/ } from 'react-konva'
 class Canvas extends Component {
   render() {
     let bonusDriver
-    
 
     if (
       this.props.bonusDriver.x !== '' &&
