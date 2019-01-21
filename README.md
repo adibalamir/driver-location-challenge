@@ -28,8 +28,12 @@
 
 ## Preview
 
+This is the core app, the "Edit Driver Location Form" can be used to change the main driver's (blue dot) position. Use the dropdown to select the leg, and enter a number to choose what percentage of the leg the driver has completed.
+
 ![Preview GIF](/assets/preview.gif)
 
 ### Bonus-1
+
+You can place a bonus driver on the map using x and y coordinates. A leg will be drawn between the bonus driver and the closest stop available.
 
 ![Bonus-1 GIF](/assets/bonus1.gif)
