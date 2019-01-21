@@ -15,12 +15,12 @@ class App extends Component {
       bonusDriver: {
         x: '',
         y: '',
-        bonusLeg: {}
+        bonusLeg: {},
       },
       stops: [],
       legs: [],
       legInput: '',
-      bonusDriverInput: {x: '', y: ''},
+      bonusDriverInput: { x: '', y: '' },
       isLoading: false,
     }
   }
@@ -36,7 +36,7 @@ class App extends Component {
         fetch('/driver'),
         fetch('/stops'),
         fetch('/legs'),
-        fetch('bonusDriver')
+        fetch('bonusDriver'),
       ])
 
       const driver = await driverRes.json()
@@ -49,7 +49,7 @@ class App extends Component {
           driver,
           stops,
           legs,
-          bonusDriver
+          bonusDriver,
         },
         this.getDriverCoordinates
       )
@@ -118,27 +118,35 @@ class App extends Component {
     )
   }
 
-  getBonusLeg = (stops) => {
+  getBonusLeg = stops => {
     let bonusDriver = this.state.bonusDriver
-    let closestStop = {x: stops[0].x, y: stops[0].y}
+    let closestStop = { x: stops[0].x, y: stops[0].y }
     console.log(bonusDriver.x)
     console.log(closestStop.x)
     console.log()
-    let distance = Math.sqrt(Math.pow((closestStop.y - bonusDriver.y), 2) + Math.pow((closestStop.x - bonusDriver.x), 2))
+    let distance = Math.sqrt(
+      Math.pow(closestStop.y - bonusDriver.y, 2) +
+        Math.pow(closestStop.x - bonusDriver.x, 2)
+    )
     console.log(distance)
     for (let i = 1; i < stops.length; i++) {
-      let currDistance = Math.sqrt(Math.pow((stops[i].y - bonusDriver.y), 2) + Math.pow((stops[i].x - bonusDriver.x), 2))
+      let currDistance = Math.sqrt(
+        Math.pow(stops[i].y - bonusDriver.y, 2) +
+          Math.pow(stops[i].x - bonusDriver.x, 2)
+      )
       if (currDistance < distance) {
         distance = currDistance
         closestStop = stops[i]
       }
     }
-    this.setState({bonusDriver: {...this.state.bonusDriver, bonusLeg: closestStop}})
+    this.setState({
+      bonusDriver: { ...this.state.bonusDriver, bonusLeg: closestStop },
+    })
   }
 
   handleBonusSubmit = async e => {
     e.preventDefault()
-    this.setState({ loading:true })
+    this.setState({ loading: true })
     const response = await fetch('/bonusDriver', {
       method: 'PUT',
       headers: {
@@ -146,8 +154,8 @@ class App extends Component {
       },
       body: JSON.stringify({
         xInput: this.state.bonusDriverInput.x,
-        yInput: this.state.bonusDriverInput.y
-      })
+        yInput: this.state.bonusDriverInput.y,
+      }),
     })
     const json = await response.text()
     const body = JSON.parse(json)
@@ -157,7 +165,7 @@ class App extends Component {
         ...this.state.bonusDriver,
         x: body.xInput,
         y: body.yInput,
-      }
+      },
     })
     this.getBonusLeg(this.state.stops)
   }
@@ -192,12 +200,20 @@ class App extends Component {
                   {this.state.legs.map(leg => {
                     if (leg.legID === this.state.driver.activeLegID) {
                       return (
-                        <option key={leg.legID} selected={true} value={leg.legID}>
+                        <option
+                          key={leg.legID}
+                          selected={true}
+                          value={leg.legID}
+                        >
                           {leg.legID}
                         </option>
                       )
                     } else {
-                      return <option key={leg.legID} value={leg.legID}>{leg.legID}</option>
+                      return (
+                        <option key={leg.legID} value={leg.legID}>
+                          {leg.legID}
+                        </option>
+                      )
                     }
                   })}
                 </select>
@@ -226,20 +242,38 @@ class App extends Component {
           </div>
           <form className="bonus-driver-form" onSubmit={this.handleBonusSubmit}>
             <p>Bonus Driver</p>
-            x:<input 
+            x:
+            <input
               type="number"
               min="0"
               max="200"
               value={this.state.bonusDriverInput.x}
-              onChange={e => this.setState({bonusDriverInput: {...this.state.bonusDriverInput, x: e.target.value}})}
-            /><br />
-            y:<input
+              onChange={e =>
+                this.setState({
+                  bonusDriverInput: {
+                    ...this.state.bonusDriverInput,
+                    x: e.target.value,
+                  },
+                })
+              }
+            />
+            <br />
+            y:
+            <input
               type="number"
               min="0"
               max="200"
               value={this.state.bonusDriverInput.y}
-              onChange={e => this.setState({bonusDriverInput: {...this.state.bonusDriverInput ,y: e.target.value}})}
-            /><br />
+              onChange={e =>
+                this.setState({
+                  bonusDriverInput: {
+                    ...this.state.bonusDriverInput,
+                    y: e.target.value,
+                  },
+                })
+              }
+            />
+            <br />
             <button>Submit</button>
           </form>
         </div>
