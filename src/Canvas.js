@@ -3,6 +3,35 @@ import { Stage, Layer, Circle, Line /*Text*/ } from 'react-konva'
 
 class Canvas extends Component {
   render() {
+    let bonusDriver
+    
+
+    if (
+      this.props.bonusDriver.x !== '' &&
+      this.props.bonusDriver.bonusLeg !== undefined
+    ) {
+      bonusDriver = (
+        <React.Fragment key={this.props.bonusDriver.bonusLeg.name}>
+          <Circle
+            x={this.props.bonusDriver.x}
+            y={this.props.bonusDriver.y}
+            width={4}
+            height={4}
+            fill="red"
+          />
+          <Line
+            points={[
+              this.props.bonusDriver.x,
+              this.props.bonusDriver.y,
+              this.props.bonusDriver.bonusLeg.x,
+              this.props.bonusDriver.bonusLeg.y,
+            ]}
+            stroke={'black'}
+            strokeWidth={0.8}
+          />
+        </React.Fragment>
+      )
+    }
     let visitedByDriver = true
     return (
       <Stage
@@ -105,6 +134,7 @@ class Canvas extends Component {
             height={4}
             fill="blue"
           />
+          {bonusDriver}
         </Layer>
       </Stage>
     )

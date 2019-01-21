@@ -68,6 +68,9 @@ h1 {
   margin: 1.3rem auto;
   display: inline-block; }
 
+.bonus-driver-form {
+  margin-top: 25rem; }
+
 @media only screen and (max-width: 600px) {
   #position-form {
     position: static;

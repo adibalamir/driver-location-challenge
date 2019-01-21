@@ -17,7 +17,7 @@
 - konva
 - react-konva
 - node-sass
-- npm run-all
+- npm-run-all
 
 ### Preview
 
